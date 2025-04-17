@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Pizza - Techno white fang</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Font Google  -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- File Normalize  -->
+    <link rel="stylesheet" href="normalize.css" />
+    <!-- Font Awesome  -->
+    <link rel="stylesheet" href="all.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+    />
+    <!-- Main Style sheet  -->
+    <link rel="stylesheet" href="style.css" />
+
+     <!-- AR.js and Three.js Libraries -->
+
+
+
+     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://rawcdn.githack.com/AR-js-org/AR.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
+
+
+
+<script src="index.js"></script>
+<style>
+  :root {
+  --bg-color: #ffffff; /* Default Background */
+  --text-color: #000000; /* Default Text */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.morning {
+  --bg-color: #FFFAF0;
+  --text-color: #FF5733;
+}
+
+.afternoon {
+  --bg-color: #FFF8DC;
+  --text-color: #FF8C00;
+}
+
+.evening {
+  --bg-color: #FAEBD7;
+  --text-color: #8B0000;
+}
+
+.night {
+  --bg-color: #2F4F4F;
+  --text-color: #F0E68C;
+}
+
+</style>
+  </head>
+  <body>
+   <!-- Header section starts -->
+   <header>
+    <a href="#" class="logo"><img src="favicon.png" alt="Pizza Website Logo">DIVE INTO FLAVOUR</a>
+  
+    <nav class="navbar">
+      <a href="#home" class="active">Home</a>
+      <a href="#dishes">Popular</a>
+      <a href="menu.html">Menu</a>
+      <a href="partycombo.html">party</a>
+      <a href="#about">About</a>
+      <a href="#ingredients">Ingredients</a>
+      <a href="#review">Review</a>
+      <a href="#order">Order</a>
+    </nav>
+  
+    <div class="icons">
+      <i class="fas fa-bars" id="menu-bars">Menu</i>
+      
+  
+      <!-- Conditional display based on cookie ---->
+      <?php if (isset($_COOKIE['user_email'])): ?>
+      
+      <?php
+      echo "Cookie value: " . $_COOKIE['user_email']; // Debugging line to check cookie
+      $admin_email = "admin@pizza.com";
+      if (isset($_COOKIE['user_email']) && $_COOKIE['user_email'] === $admin_email): ?>
+          <a href="admin.php" class="fas fa-tools" title="Admin Panel">Admin</a>
+      <?php endif; ?>
+      
+
+
+
+        <div class="user-options">
+          <div class="profile-icon">
+            <a href="#" class="fas fa-user" title="Profile">Profile</a>
+            <div class="dropdown">
+              <button class="dropbtn"></button>
+              <div class="dropdown-content">
+                <a href="profile/profile1.php">ViewProfile</a>
+                <a href="cart/cart.html">Cart</a>
+
+               <!-- <a href="orderhistory/orderhistory.php">OrderHistory</a>  New feature for tracking orders 
+                <a href="customersupport/customersupport.php">Customersupport</a>
+                <a href="login/logout.php" class="logout">Logout</a>>-->
+                
+              </div>
+            </div>
+            <div class="hover-info">
+              Logged in as: <?php echo htmlspecialchars($_COOKIE['user_email']); ?>
+            </div>
+          </div>
+        </div>
+      <?php else: ?>
+        <a href="login/index.php.html" class="fas fa-sign-in-alt login" title="Login">LOGIN</a>
+      <?php endif; ?>
+    </div>
+      <!-- QR Code Display -->
+  <div class="qr-code">
+    <img src="qr.png" alt="QR Code" style="width:100px; height:auto;">
+    <img src="qrmenucard.png" alt="QR Code" style="width:100px; height:auto;">
+  </div>
+</div>
+  </header>
+  
+   
+  
+  <style>
+   /* Profile icon container */
+.profile-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-icon .fas.fa-user {
+  font-size: 21px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Dropdown menu styles */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  display: none;
+  min-width: 160px;
+  background-color: #f8f8f8;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show dropdown when hovering over the profile icon */
+.profile-icon:hover .dropdown {
+  display: block;
+}
+
+.hover-info {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+  </style>
+  
+<!-- Header section end -->
+
+
+    <form action="" id="search-form">
+      <input type="search" id="search-box" placeholder="search here...." />
+      <label for="search-box" class="fa-search"></label>
+      <i class="fas fa-times" id="close"></i>
+    </form>
+
+    <section class="home" id="home">
+      <div class="content">
+        <div class="content-left">
+          <div class="info">
+            <h2>Crispy And <br />delicious <span>Pizzas</span></h2>
+            <p>
+              We're passionate about serving up delicious <br />
+              pizzas that bring people together.
+              
+            </p>
+          </div>
+          <a href="#" class="btn">Order Pizza Now</a>
+        </div>
+        <div class="content-right">
+          <img src="home.png" alt="" />
+        </div>
+      </div>
+    </section>
+
+
+    ...
+    <!-- Other content of your website -->
+    
+
+   
+    
+
+    <section class="dishes" id="dishes">
+      <h3 class="sub-heading">our pizzas</h3>
+      <h1 class="heading">popular pizzas</h1>
+
+      <div class="box-container">
+        <div class="box">
+          <a href="" class="fas fa-heart"></a>
+          <a href="" class="fas fa-eye"></a>
+          <img src="product-1.png" alt="" />
+          <h3>Vegeterian Pizza</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>$15.99</span>
+          <a href="cart/cart.html" class="btn">add to cart</a>
+        </div>
+        <div class="box">
+          <a href="" class="fas fa-heart"></a>
+          <a href="" class="fas fa-eye"></a>
+          <img src="product-2.png" alt="" />
+          <h3>Pepperoni Pizza</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>$10.99</span>
+          <a href="cart/cart.html" class="btn">add to cart</a>
+        </div>
+
+        <div class="box">
+          <a href="" class="fas fa-heart"></a>
+          <a href="" class="fas fa-eye"></a>
+          <img src="product-3.png" alt="" />
+          <h3>Margarito Pizza</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>$12.99</span>
+          <a href="cart/cart.html" class="btn">add to cart</a>
+        </div>
+
+        <div class="box">
+          <a href="" class="fas fa-heart"></a>
+          <a href="" class="fas fa-eye"></a>
+          <img src="product-4.png" alt="" />
+          <h3>Mushroom Pizza</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>$15.99</span>
+          <a href="cart/cart.html" class="btn">add to cart</a>
+        </div>
+
+        <div class="box">
+          <a href="" class="fas fa-heart"></a>
+          <a href="" class="fas fa-eye"></a>
+          <img src="product-5.png" alt="" />
+          <h3>Italian pizza</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>$15.99</span>
+          <a href="cart/cart.html" class="btn">add to cart</a>
+        </div>
+
+        <div class="box">
+          <a href="" class="fas fa-heart"></a>
+          <a href="" class="fas fa-eye"></a>
+          <img src="product-6.png" alt="" />
+          <h3>delicious Pizza Slice</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <span>$2.99</span>
+          <a href="cart/cart.html" class="btn">add to cart</a>
+        </div>
+      </div>
+    </section>
+
+  
+    
+    
+
+    <section class="about" id="about">
+      <h3 class="sub-heading">about us</h3>
+      <h1 class="heading">why choose us</h1>
+      <div class="row">
+        <div class="image">
+          <img src="about.png" alt="" />
+        </div>
+        <div class="content">
+          <h3>where quality meet excellent service</h3>
+          <p>
+            It's the perfect dining experience where every dish is crafted with
+            fresh, high-quality Experience quick and efficient service that
+            ensures your food is servead fresh It's the dining experience where
+            every dish is crafted with fresh, high-quality ingredients
+          </p>
+          <p>
+            The enticing aroma of sizzling cuisine now fills the streets of
+            California, thanks to a passionate commitment to culinary
+            excellence.
+          </p>
+          <div class="icons-container">
+            <div class="icons">
+              <i class="fas fa-star"></i>
+              <div>
+                <span>Super Quality Food</span>
+                <p>
+                  A team of dreamers and doers build unique interactive music
+                  and art
+                </p>
+              </div>
+            </div>
+
+            <div class="icons">
+              <i class="fas fa-thumbs-up"></i>
+              <div>
+                <span>Well Reputation</span>
+                <p>
+                  A team of dreamers and doers build unique interactive music
+                  and art
+                </p>
+              </div>
+            </div>
+          </div>
+          <a href="learn.html">learn more</a>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    <section class="ingredients" id="ingredients">
+      <h3 class="sub-heading">Fresh And</h3>
+      <h1 class="heading">Natural Ingredients</h1>
+
+      <div class="box-container">
+        <div class="box">
+          <div class="image">
+            <img src="recipe-flour.png" alt="" />
+            <a href="" class="fas fa-heart"></a>
+          </div>
+
+          <div class="content">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Flour</h3>
+            <p>
+              Our pizza dough is crafted with high quality, finely milled Flour
+              for a crispy and tender bite.
+            </p>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="image">
+            <img src="recipe-cheese.png" alt="" />
+            <a href="" class="fas fa-heart"></a>
+          </div>
+
+          <div class="content">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Cheese</h3>
+            <p>We top our pizzas with a blend of creamy mozzarella, parmesan
+              and ricotta cheese for rich and velvety flavor.
+            </p>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="image">
+            <img src="recipe-tomato.png" alt="" />
+            <a href="" class="fas fa-heart"></a>
+          </div>
+
+          <div class="content">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Vegetables</h3>
+            <p>We add a pop of color and flavor to our pizzas with a variety of fresh
+              Vegetables.
+            </p>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="image">
+            <img src="recipe-meat.png" alt="" />
+            <a href="" class="fas fa-heart"></a>
+          </div>
+
+          <div class="content">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Meat</h3>
+            <p>Our pizzas are topped with premium meats, including Pepperoni
+              carefully selected for their rich flavor.
+            </p>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="image">
+            <img src="recipe-sauces.png" alt="" />
+            <a href="" class="fas fa-heart"></a>
+          </div>
+
+          <div class="content">
+            <div class="stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Sauces</h3>
+            <p>Our pizzas are built on a foundation of rich, tangy sauces,
+              including our signature marinara and arrabbiata.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+    <section class="review" id="review">
+      <h3 class="sub-heading">customer's review</h3>
+      <h1 class="heading">What they say?</h1>
+
+    
+
+          <div class="swiper-slide slide">
+            <i class="fas fa-quote-right"></i>
+            <div class="user">
+              <img src="r2.jpg" alt="" />
+              <div class="user-info">
+                <h3>john doe</h3>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+            <p>
+              This place exceeded my expectations! The food was fresh,
+              flavorful, and beautifully presented. The staff was attentive and
+              made sure our experience was enjoyable. I'll definitely be coming
+              back for more!
+            </p>
+          </div>
+
+          <div class="swiper-slide slide">
+            <i class="fas fa-quote-right"></i>
+            <div class="user">
+              <img src="r3.jpg" alt="" />
+              <div class="user-info">
+                <h3>Casandra</h3>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+            <p>
+              This place exceeded my expectations! The food was fresh,
+              flavorful, and beautifully presented. The staff was attentive and
+              made sure our experience was enjoyable. I'll definitely be coming
+              back for more!
+            </p>
+          </div>
+
+          <div class="swiper-slide slide">
+            <i class="fas fa-quote-right"></i>
+            <div class="user">
+              <img src="r4.jpg" alt="" />
+              <div class="user-info">
+                <h3>Zoya</h3>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+            <p>
+              This place exceeded my expectations! The food was fresh,
+              flavorful, and beautifully presented. The staff was attentive and
+              made sure our experience was enjoyable. I'll definitely be coming
+              back for more!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper review-slider">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide slide">
+            <i class="fas fa-quote-right"></i>
+            <div class="user">
+              <img src="r1.jpg" alt="" />
+              <div class="user-info">
+                <h3>Julia</h3>
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+            </div>
+            <p>
+              This place exceeded my expectations! The food was fresh,
+              flavorful, and beautifully presented. The staff was attentive and
+              made sure our experience was enjoyable. I'll definitely be coming
+              back for more!
+            </p>
+          </div>
+    </section>
+
+    
+    <section class="order" id="order">
+      <h3 class="sub-heading">order now</h3>
+      <h1 class="heading">free and fast</h1>
+    
+      <form id="orderForm" onsubmit="saveOrderData(event)">
+        <div class="inputBox">
+          <div class="input">
+            <span>your name</span>
+            <input type="text" id="customerName" placeholder="enter your name" required />
+          </div>
+          <div class="input">
+            <span>your number</span>
+            <input type="number" id="customerNumber" placeholder="enter your number" required />
+          </div>
+        </div>
+    
+        <div class="inputBox">
+          <div class="input">
+            <span>your order</span>
+            <input type="text" id="pizzaName" placeholder="enter pizza name" required oninput="showPrice()" />
+          </div>
+          <div class="input">
+            <span>price</span>
+            <input type="text" id="pizzaPrice" placeholder="price" readonly />
+          </div>
+        </div>
+    
+        <div class="inputBox">
+          <div class="input">
+            <span>how much</span>
+            <input type="number" id="quantity" placeholder="how many orders" required />
+          </div>
+          <div class="input">
+            <span>date and time</span>
+            <input type="datetime-local" id="datetime" required />
+          </div>
+        </div>
+    
+        <div class="inputBox">
+          <div class="input">
+            <span>your address</span>
+            <textarea id="address" placeholder="enter your address" required></textarea>
+          </div>
+          <div class="input">
+            <span>your message</span>
+            <textarea id="message" placeholder="enter your message"></textarea>
+          </div>
+        </div>
+    
+        
+        <button onclick="window.location.href = 'payment.html';">Go to Payment</button>
+<style>button {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+</style>
+      </form>
+    </section>
+    
+    <script>
+    // Pizza prices (updated with your pizza names and prices)
+    const pizzaPrices = {
+      "vegeterian pizza": 15.99,
+      "pepperoni pizza": 10.99,
+      "margarito pizza": 12.99,
+      "mushroom pizza": 15.99,
+      "italian pizza": 15.99,
+      "delicious pizza slice": 2.99
+    };
+    
+    // Function to show pizza price dynamically based on pizza name
+    function showPrice() {
+      const pizza = document.getElementById("pizzaName").value.toLowerCase();
+      const price = pizzaPrices[pizza];
+      if (price) {
+        document.getElementById("pizzaPrice").value = `$${price.toFixed(2)}`;
+      } else {
+        document.getElementById("pizzaPrice").value = "Not available";
+      }
+    }
+    
+    // Function to save order data and redirect to payment page
+    function saveOrderData(e) {
+      e.preventDefault();
+    
+      const name = document.getElementById("customerName").value;
+      const phone = document.getElementById("customerNumber").value;
+      const order = document.getElementById("pizzaName").value;
+      const priceText = document.getElementById("pizzaPrice").value.replace('$', '') || "0";
+      const price = parseFloat(priceText);
+      const quantity = parseInt(document.getElementById("quantity").value);
+      const datetime = document.getElementById("datetime").value;
+      const address = document.getElementById("address").value;
+      const message = document.getElementById("message").value;
+    
+      // Calculate total amount
+      const totalAmount = (price * quantity).toFixed(2);
+    
+      // Store order details in localStorage
+      localStorage.setItem("orderData", JSON.stringify({
+        name, phone, order, price, quantity, datetime, address, message, totalAmount
+      }));
+    
+      // Redirect to payment page
+      window.location.href = "payment.html";
+        // Prevent default form submission
+  return false;
+    }
+    </script>
+    
+
+    
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Our Locations</h3>
+          <ul>
+            <li>
+              <a href="#"
+                ><i class="fas fa-map-marker-alt"></i>United Nations</a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-map-marker-alt"></i>United Kingdom</a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-map-marker-alt"></i>India</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-map-marker-alt"></i>Russia</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-map-marker-alt"></i>Israil</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-map-marker-alt"></i>Dubai</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#dishes">Popular</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#menu">Ingredients</a></li>
+            <li><a href="#review">Review</a></li>
+            <li><a href="#order">Order</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>
+              <a href="tel: +123456789"
+                ><i class="fas fa-phone"></i>+1 (234) 567-890</a
+              >
+            </li>
+            <li>
+              <a href="tel: +345677890"
+                ><i class="fas fa-phone"></i>+1 (898) 876-876</a
+              >
+            </li>
+            <li>
+              <a href="mailto:info@savory.com"
+                ><i class="fas fa-envelope"></i>info@pizza.com</a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-map"></i>123 sesame street, ny 465768</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Connect with us</h3>
+          <div class="social-links">
+            <a href="#" class="social-link"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </div>
+
+          <div class="newsletter">
+            <h4>Subscribe to our Newsletter</h4>
+            <form action="" class="subscribe-form">
+              <input type="email" placeholder="enter your email" />
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="copyright">
+          <p>&copy; 2025 pizza. all rights reserved</p>
+        </div>
+        <div class="footer-links">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+     
+<script>
+  document.querySelector(".subscribe-form").addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent actual form submission
+    const emailInput = this.querySelector("input[type='email']");
+    const email = emailInput.value.trim();
+
+    if (email && validateEmail(email)) {
+      alert(`Thanks for subscribing with: ${email}`);
+      emailInput.value = "";
+    } else {
+      alert("Please enter a valid email address.");
+    }
+  });
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+</script>
+
+    </footer>
+<script>
+  // Cart functionality using Local Storage
+  const addToCartButtons = document.querySelectorAll('.btn'); // select all Add to Cart buttons
+  
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      // Prevent the default action (like form submission, if any)
+      event.preventDefault();
+  
+      // Get the parent div that contains product details
+      const product = button.closest('.box');
+  
+      // Retrieve product details: name, price, and image source
+      const productName = product.querySelector('h3').textContent;
+      const productPrice = product.querySelector('span').textContent;
+      const productImage = product.querySelector('img').src;
+  
+      // Create a product object
+      const productData = {
+        name: productName,
+        price: productPrice,
+        image: productImage,
+      };
+  
+      // Get cart data from localStorage or initialize an empty array
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+      // Check if the product is already in the cart
+      const existingProduct = cart.find(item => item.name === productName);
+  
+      if (existingProduct) {
+        // If product is already in the cart, increase the quantity
+        existingProduct.quantity += 1;
+      } else {
+        // If product is not in the cart, add it with quantity 1
+        productData.quantity = 1;
+        cart.push(productData);
+      }
+  
+      // Save updated cart to localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+  
+      // Optionally, alert or show a confirmation
+      alert(`${productName} added to cart`);
+    });
+  });
+ 
+  </script>
+
+<script>
+ 
+  function applyThemeBasedOnTime() {
+    const hour = new Date().getHours();
+    const body = document.body;
+
+    if (hour >= 6 && hour < 12) {
+      body.className = 'morning'; // Morning theme
+    } else if (hour >= 12 && hour < 18) {
+      body.className = 'afternoon'; // Afternoon theme
+    } else if (hour >= 18 && hour < 21) {
+      body.className = 'evening'; // Evening theme
+    } else {
+      body.className = 'night'; // Night theme
+    }
+  }
+
+  // Apply the theme on page load
+  window.addEventListener('DOMContentLoaded', applyThemeBasedOnTime);
+</script>
+
+</script>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <!-- File Javascript  -->
+    <script src="app.js"></script>
+  </body>
+</html>

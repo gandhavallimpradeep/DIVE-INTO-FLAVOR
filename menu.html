@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Management</title>
+  <style>
+    /* General reset */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #ff5722;
+      padding: 10px 20px;
+    }
+
+    header .logo {
+      font-size: 24px;
+      color: white;
+      text-decoration: none;
+    }
+
+    header .navbar a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+    }
+
+    header .navbar a.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .menu-section {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .menu-section .heading {
+      font-size: 32px;
+      color: #ff5722;
+      margin-bottom: 20px;
+    }
+
+    .menu-section .box-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .menu-section .image-box, 
+    .menu-section .content-box {
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      overflow: hidden;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .menu-section .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      animation: rotateImage 5s infinite linear;
+    }
+
+    @keyframes rotateImage {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .menu-section .content-box h3 {
+      font-size: 20px;
+      color: #333;
+      margin: 10px 0;
+    }
+
+    .menu-section .content-box p {
+      margin: 10px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .menu-section .content-box .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #ff5722;
+      color: white;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .menu-section .content-box .btn:hover {
+      background-color: #e64a19;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="logo">
+      <img src="favicon.png" alt="Menu Logo"> MENU MANAGEMENT
+    </a>
+    <nav class="navbar">
+      <a href="index.html" class="active">Home</a>
+      <a href="menu.html">Menu</a>
+    </nav>
+  </header>
+
+  <section class="menu-section">
+    <h1 class="heading">Our Popular Menu</h1>
+    <div class="box-container">
+      <div>
+        <div class="image-box">
+          <img src="product-1.png" alt="Vegetarian Pizza">
+        </div>
+        <div class="content-box">
+          <h3>Vegetarian Pizza</h3>
+          <p>A wholesome pizza topped with fresh vegetables like bell peppers, onions, olives, and juicy tomatoes on a bed of rich tomato sauce and gooey cheese.</p>
+          <p><strong>Price:</strong> $15.99</p>
+          <a href="cart/cart.html" class="btn">Add to Cart</a>
+        </div>
+      </div>
+      <div>
+        <div class="image-box">
+          <img src="product-2.png" alt="Pepperoni Pizza">
+        </div>
+        <div class="content-box">
+          <h3>Pepperoni Pizza</h3>
+          <p>A classic favorite loaded with crispy, spicy pepperoni slices, melted mozzarella, and our signature tomato sauce for an irresistible taste.</p>
+          <p><strong>Price:</strong> $10.99</p>
+          <a href="cart/cart.html" class="btn">Add to Cart</a>
+        </div>
+      </div>
+      <div>
+        <div class="image-box">
+          <img src="product-3.png" alt="Margarito Pizza">
+        </div>
+        <div class="content-box">
+          <h3>Margarito Pizza</h3>
+          <p>Simple yet elegant, this pizza features a rich tomato base, fresh mozzarella, and fragrant basil leaves, perfect for a light and refreshing meal.</p>
+          <p><strong>Price:</strong> $12.99</p>
+          <a href="cart/cart.html" class="btn">Add to Cart</a>
+        </div>
+      </div>
+      <div>
+        <div class="image-box">
+          <img src="product-4.png" alt="Mushroom Pizza">
+        </div>
+        <div class="content-box">
+          <h3>Mushroom Pizza</h3>
+          <p>Savory and satisfying, our mushroom pizza combines sautéed mushrooms, creamy cheese, and a hint of garlic for a delightful umami experience.</p>
+          <p><strong>Price:</strong> $15.99</p>
+          <a href="cart/cart.html" class="btn">Add to Cart</a>
+        </div>
+      </div>
+      <div>
+        <div class="image-box">
+          <img src="product-5.png" alt="Italian Pizza">
+        </div>
+        <div class="content-box">
+          <h3>Italian Pizza</h3>
+          <p>An authentic Italian pizza with sun-dried tomatoes, fresh basil, mozzarella, and a drizzle of olive oil for a true Mediterranean flavor.</p>
+          <p><strong>Price:</strong> $15.99</p>
+          <a href="cart/cart.html" class="btn">Add to Cart</a>
+        </div>
+      </div>
+      <div>
+        <div class="image-box">
+          <img src="product-6.png" alt="Delicious Pizza Slice">
+        </div>
+        <div class="content-box">
+          <h3>Delicious Pizza Slice</h3>
+          <p>A quick and tasty treat featuring a single slice loaded with your favorite toppings, perfect for a snack on the go.</p>
+          <p><strong>Price:</strong> $2.99</p>
+          <a href="cart/cart.html" class="btn">Add to Cart</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+
+
+

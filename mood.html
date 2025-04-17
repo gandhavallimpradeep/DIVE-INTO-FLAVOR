@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood-Based Pizza Themes</title>
+  <style>
+    /* Default Theme Variables */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --accent-color: #ffcc00; /* Default: Cheese Yellow */
+    }
+
+    /* Morning Theme */
+    body.morning {
+      --bg-color: #fff9e6; /* Bright sunny theme */
+      --text-color: #333333;
+      --accent-color: #ff9900; /* Orange for breakfast vibes */
+    }
+
+    /* Night Theme */
+    body.night {
+      --bg-color: #1e1e2f; /* Dark background */
+      --text-color: #ffffff;
+      --accent-color: #ffcc00; /* Glowing cheese */
+    }
+
+    /* Cheesy Joy Theme */
+    body.cheesy {
+      --bg-color: #fff7db; /* Cheesy joy background */
+      --text-color: #5a3900;
+      --accent-color: #ffcc00;
+    }
+
+    /* Spicy Blaze Theme */
+    body.spicy {
+      --bg-color: #331a00; /* Bold spicy theme */
+      --text-color: #ff5733;
+      --accent-color: #c70039; /* Fiery red */
+    }
+
+    /* Sweet Treat Theme */
+    body.sweet {
+      --bg-color: #ffe4e1; /* Soft pink candy vibes */
+      --text-color: #ff69b4;
+      --accent-color: #f08080; /* Sweet pastels */
+    }
+
+    /* General Styles */
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1, h3 {
+      color: var(--text-color);
+    }
+
+    .button {
+      background-color: var(--accent-color);
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+
+    .button:hover {
+      opacity: 0.8;
+    }
+
+    /* Glowing Cheese Animation */
+    .glowing-cheese {
+      font-size: 50px;
+      text-align: center;
+      margin-top: 20px;
+      animation: glow 2s infinite;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 10px #ffcc00;
+      }
+      50% {
+        text-shadow: 0 0 20px #ffcc00;
+      }
+      100% {
+        text-shadow: 0 0 10px #ffcc00;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Mood-Based Pizza Themes</h1>
+  <p>Enjoy a personalized UI based on your mood and time of day!</p>
+
+  <div>
+    <h3>Select Your Theme</h3>
+    <select id="themeSelector">
+      <option value="morning">Morning</option>
+      <option value="night">Night</option>
+      <option value="cheesy">Cheesy Joy</option>
+      <option value="spicy">Spicy Blaze</option>
+      <option value="sweet">Sweet Treat</option>
+    </select>
+  </div>
+
+  <button class="button">Order Now</button>
+
+  <div id="cheeseGlow" class="glowing-cheese" style="display: none;">🧀 Glowing Cheese!</div>
+
+  <script>
+    // Get elements
+    const themeSelector = document.getElementById("themeSelector");
+    const cheeseGlow = document.getElementById("cheeseGlow");
+
+    // Apply saved theme or default based on time
+    window.onload = () => {
+      const savedTheme = localStorage.getItem("selectedTheme");
+      if (savedTheme) {
+        applyTheme(savedTheme);
+        themeSelector.value = savedTheme;
+      } else {
+        const hour = new Date().getHours();
+        const defaultTheme = hour >= 6 && hour < 18 ? "morning" : "night";
+        applyTheme(defaultTheme);
+        themeSelector.value = defaultTheme;
+      }
+    };
+
+    // Change theme on selection
+    themeSelector.addEventListener("change", (e) => {
+      const selectedTheme = e.target.value;
+      applyTheme(selectedTheme);
+      localStorage.setItem("selectedTheme", selectedTheme);
+    });
+
+    // Function to apply theme
+    function applyTheme(theme) {
+      document.body.className = theme;
+      if (theme === "night") {
+        cheeseGlow.style.display = "block";
+      } else {
+        cheeseGlow.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

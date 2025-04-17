@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza Party Pack Builder</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Main Style sheet -->
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .pizza-party-builder {
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      margin: 20px auto;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .pizza-party-builder h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .pizza-party-builder form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pizza-party-builder label {
+      margin-top: 10px;
+    }
+
+    .pizza-party-builder input, .pizza-party-builder select {
+      width: 250px;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .pizza-party-builder button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #e67e22;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .pizza-party-builder button:hover {
+      background-color: #d35400;
+    }
+
+    #party-suggestions {
+      margin-top: 20px;
+      text-align: center;
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <section class="pizza-party-builder">
+    <h2>Pizza Party Pack Builder</h2>
+    <form id="party-form">
+      <label for="people-count">How many people are you catering for?</label>
+      <input type="number" id="people-count" name="people" min="1" required />
+
+      <label for="pizza-size">Pizza Size (Choose Small, Medium, Large):</label>
+      <select id="pizza-size" name="pizza-size" required>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+
+      <label for="pizza-flavors">Pizza Flavors (Choose the flavors):</label>
+      <select id="pizza-flavors" name="pizza-flavors[]" multiple required>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="pepperoni">Pepperoni</option>
+        <option value="margarita">Margarita</option>
+        <option value="mushroom">Mushroom</option>
+        <option value="italian">Italian</option>
+      </select>
+
+      <label for="sides">Add Sides:</label>
+      <select id="sides" name="sides[]" multiple>
+        <option value="garlic-bread">Garlic Bread</option>
+        <option value="wings">Wings</option>
+        <option value="drinks">Drinks</option>
+      </select>
+
+      <button type="submit">Calculate Party Pack</button>
+    </form>
+
+    <div id="party-suggestions">
+      <!-- Suggested Pizzas and Sides will appear here -->
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('party-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Get form data
+      const peopleCount = parseInt(document.getElementById('people-count').value);
+      const pizzaSize = document.getElementById('pizza-size').value;
+      const selectedFlavors = Array.from(document.getElementById('pizza-flavors').selectedOptions).map(option => option.value);
+      const selectedSides = Array.from(document.getElementById('sides').selectedOptions).map(option => option.value);
+
+      // Calculate the number of pizzas needed based on the people count
+      let pizzasRequired = Math.ceil(peopleCount / 3);  // 3 people per pizza
+
+      // Ensure a minimum of 3 pizzas if the calculation is less
+      if (pizzasRequired < 3) pizzasRequired = 3;
+
+      // Generate pizza suggestions
+      const pizzaSuggestion = `${pizzasRequired} ${pizzaSize} pizzas with the following flavors: ${selectedFlavors.join(', ')}.`;
+
+      // Generate sides suggestion
+      const sidesSuggestion = selectedSides.length ? `With sides: ${selectedSides.join(', ')}` : 'No sides selected.';
+
+      // Display suggestions
+      document.getElementById('party-suggestions').innerHTML = `
+        <h3>Suggested Order</h3>
+        <p>${pizzaSuggestion}</p>
+        <p>${sidesSuggestion}</p>
+      `;
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment</title>
+  
+  <style>
+    /* Reset and base styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  color: #333;
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+/* Section layout */
+section {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Headings */
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #e94e77;
+}
+
+h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Form fields */
+form label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: 600;
+}
+
+form input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus {
+  border-color: #e94e77;
+  outline: none;
+  box-shadow: 0 0 8px rgba(233, 78, 119, 0.2);
+}
+
+/* Button */
+button {
+  margin-top: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #e94e77;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #d43a63;
+  transform: scale(1.03);
+}
+
+/* Receipt styling */
+#receipt-details p {
+  margin-bottom: 10px;
+  font-size: 16px;
+  animation: fadeInUp 0.4s ease both;
+}
+
+/* Error Message */
+#payment-error {
+  margin-top: 15px;
+  font-size: 15px;
+}
+
+/* Responsive */
+@media screen and (max-width: 640px) {
+  section {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  form input, button {
+    font-size: 15px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Payment Section -->
+  <section id="payment-section">
+    <h2>Enter Payment Details</h2>
+    <form id="payment-form">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" required placeholder="Your Name" />
+
+      <label for="card-number">Card Number:</label>
+      <input type="text" id="card-number" required placeholder="1234 5678 9012 3456" />
+
+      <label for="expiry-date">Expiry Date:</label>
+      <input type="month" id="expiry-date" required />
+
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" required placeholder="123" />
+
+      <button type="submit">Pay Now</button>
+    </form>
+    <div id="payment-error" style="color: red; display: none;">Please fill out all fields correctly.</div>
+  </section>
+
+  <!-- Receipt Section (hidden initially) -->
+  <section id="receipt-section" style="display: none; margin-top: 30px;">
+    <h2>Payment Successful! 🎉</h2>
+    <h3>Customer Receipt</h3>
+    <div id="receipt-details"></div>
+    <button onclick="window.location.href='index.html'">Back to Home</button>
+  </section>
+
+  <script>
+    const paymentForm = document.getElementById('payment-form');
+    const receiptSection = document.getElementById('receipt-section');
+    const paymentSection = document.getElementById('payment-section');
+    const receiptDetails = document.getElementById('receipt-details');
+
+    paymentForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const cardNumber = document.getElementById('card-number').value;
+      const expiryDate = document.getElementById('expiry-date').value;
+      const cvv = document.getElementById('cvv').value;
+
+      if (name && cardNumber && expiryDate && cvv) {
+        alert('Payment Successful!');
+
+        // Hide payment form and show receipt
+        paymentSection.style.display = 'none';
+        receiptSection.style.display = 'block';
+
+        // Get order details from localStorage
+        const orderData = JSON.parse(localStorage.getItem('orderData'));
+
+        // Display order info
+        if (orderData) {
+          receiptDetails.innerHTML = `
+            <p><strong>Name:</strong> ${orderData.name}</p>
+            <p><strong>Phone:</strong> ${orderData.phone}</p>
+            <p><strong>Pizza Ordered:</strong> ${orderData.order}</p>
+            <p><strong>Price:</strong> $${orderData.price.toFixed(2)}</p>
+            <p><strong>Quantity:</strong> ${orderData.quantity}</p>
+            <p><strong>Total Amount:</strong> $${orderData.totalAmount}</p>
+            <p><strong>Date & Time:</strong> ${orderData.datetime}</p>
+            <p><strong>Address:</strong> ${orderData.address}</p>
+            <p><strong>Message:</strong> ${orderData.message || 'None'}</p>
+          `;
+        } else {
+          receiptDetails.innerHTML = `<p>No order data found.</p>`;
+        }
+
+      } else {
+        document.getElementById('payment-error').style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>
+
